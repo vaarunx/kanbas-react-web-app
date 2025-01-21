@@ -26,8 +26,8 @@ export default function AssignmentEditor() {
           </td>
           <td>
             <select name="grouping" id="wd-group">
-              <option value="ASSIGNMENTS">ASSIGNMENTS</option>
-              <option value="PROJECTS">PROJECTS</option>
+              <option value="assignments">Assignments</option>
+              <option value="projects">Projects</option>
             </select>
           </td>
         </tr>
@@ -43,7 +43,7 @@ export default function AssignmentEditor() {
           </td>
         </tr>
         <tr>
-        <td align="right" valign="top">
+          <td align="right" valign="top">
             <label htmlFor="wd-submission-type">Submission Type</label>
           </td>
           <td>
