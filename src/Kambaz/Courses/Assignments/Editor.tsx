@@ -137,11 +137,11 @@ export default function AssignmentEditor() {
                   <FormLabel className="fs-5">
                     <b>Assign to</b>
                   </FormLabel>
-                  <FormControl
-                    id="wd-assign-to"
-                    type="text"
-                    placeholder="Everyone"
-                  />
+                  <Form.Select id="wd-assign-to">
+                    <option value="Everyone">Everyone</option>
+                    <option value="Team A">Team A</option>
+                    <option value="Team B">Team B</option>
+                  </Form.Select>
 
                   <FormLabel className="mt-4">
                     <b>Due</b>
