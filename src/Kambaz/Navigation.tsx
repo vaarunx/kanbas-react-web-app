@@ -19,7 +19,7 @@ export default function KambazNavigation() {
         href="https://www.northeastern.edu/"
         className="list-group-item bg-black border-0 text-center"
       >
-        <img src="src/assets/northeastern-logo-red.png" width="75px" />
+        <img src="images/northeastern-logo-red.png" width="75px" />
       </a>
       <Link
         to="/Kambaz/Account"
@@ -38,10 +38,10 @@ export default function KambazNavigation() {
       <Link
         to="/Kambaz/Dashboard"
         id="wd-dashboard-link"
-        className={`list-group-item text-center border-0 ${
+        className={`list-group-item text-center border-0 bg-white text-danger ${
           location.pathname === "/Kambaz/Dashboard"
             ? "bg-white text-danger"
-            : "bg-black text-white"
+            : "bg-black text-danger"
         }`}
       >
         <AiOutlineDashboard className="fs-1 text-danger" />
