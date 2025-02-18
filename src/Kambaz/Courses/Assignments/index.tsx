@@ -1,10 +1,29 @@
-import { BsGripVertical, BsPlus } from "react-icons/bs";
-import { CiSearch } from "react-icons/ci";
-import { IoEllipsisVertical } from "react-icons/io5";
-import { PiNotePencilFill } from "react-icons/pi";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { BsGripVertical } from "react-icons/bs";
 import LessonControlButtons from "../Modules/LessonControlButtons";
+import { IoEllipsisVertical } from "react-icons/io5";
+import { CiSearch } from "react-icons/ci";
+import { BsPlus } from "react-icons/bs";
+import { PiNotePencilFill } from "react-icons/pi";
+import { useParams } from "react-router";
+import { assignments } from "../../Database";
 
 export default function Assignments() {
+  const { cid } = useParams();
+  const assignment = assignments;
+
+  function formatDate(dateStr: string | Date) {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+  }
+
   return (
     <div id="wd-assignments">
       <div className="d-flex justify-content-between align-items-center flex-wrap">
@@ -32,7 +51,6 @@ export default function Assignments() {
           </button>
         </div>
       </div>
-
       <ul id="wd-modules" className="list-group rounded-0 mt-5">
         <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
           <div
@@ -43,8 +61,8 @@ export default function Assignments() {
               <BsGripVertical className="me-2 fs-3" />
               ASSIGNMENTS
             </span>
-            <div className="ms-auto me-2 fs-6">
-              <span className="border border-grey rounded-4 p-3">
+            <div className="ms-auto me-2 fs-4">
+              <span className="border border-grey rounded-5 p-2">
                 40% of Total
               </span>
               <button className="btn btn-lg ">
@@ -54,75 +72,35 @@ export default function Assignments() {
             <IoEllipsisVertical className="fs-4" />
           </div>
           <ul className="wd-lessons list-group rounded-0">
-            <li className="wd-lesson wd-assignment-list-item list-group-item p-3 ps-1 d-flex align-items-start">
-              <BsGripVertical className="me-3 mt-5 fs-3" />
-              <PiNotePencilFill className="me-3 mt-5 fs-3 text-success" />
-              <div className="mt-2">
-                <a
-                  className="wd-assignment-link text-black text-decoration-none"
-                  href="#/Kambaz/Courses/1234/Assignments/1234"
-                >
-                  <b className="fs-4">A1</b>
-                </a>
-                <br />
-                <p>
-                  <span className="text-danger">Multiple Modules </span> |
-                  <b> Not available until</b> May 6 at 12:00am |
-                </p>
-                <p>
-                  <b>Due</b> May 13 at 11:59pm | 100pts
-                </p>
-              </div>
-              <div className="ms-auto">
-                <LessonControlButtons />
-              </div>
-            </li>
-            <li className="wd-lesson wd-assignment-list-item list-group-item p-3 ps-1 d-flex align-items-start">
-              <BsGripVertical className="me-3 mt-5 fs-3" />
-              <PiNotePencilFill className="me-3 mt-5 fs-3 text-success" />
-
-              <div className="mt-2">
-                <a
-                  className="wd-assignment-link text-black text-decoration-none"
-                  href="#/Kambaz/Courses/1234/Assignments/123"
-                >
-                  <b className="fs-4">A2</b>
-                </a>
-                <p>
-                  <span className="text-danger">Multiple Modules</span> |
-                  <b>Not available until</b> May 13 at 12:00am |
-                </p>
-                <p>
-                  <b>Due</b> May 20 at 11:59pm | 100pts
-                </p>
-              </div>
-              <div className="ms-auto">
-                <LessonControlButtons />
-              </div>
-            </li>
-            <li className="wd-lesson wd-assignment-list-item list-group-item p-3 ps-1 d-flex ">
-              <BsGripVertical className="me-3 mt-5 fs-3" />
-              <PiNotePencilFill className="me-3 mt-5 fs-3 text-success" />
-
-              <div className="mt-2">
-                <a
-                  className="wd-assignment-link text-black text-decoration-none "
-                  href="#/Kambaz/Courses/1234/Assignments/123"
-                >
-                  <b className="fs-4">A3</b>
-                </a>
-                <p>
-                  <span className="text-danger">Multiple Modules</span> |
-                  <b>Not available until</b> May 20 at 12:00am |
-                </p>
-                <p className="pb-2">
-                  <b>Due</b> May 27 at 11:59pm | 100pts
-                </p>
-              </div>
-              <div className="ms-auto">
-                <LessonControlButtons />
-              </div>
-            </li>
+            {assignment
+              .filter((assignment: any) => assignment.course === cid)
+              .map((assignment: any) => (
+                <li className="wd-lesson wd-assignment-list-item list-group-item p-3 ps-1 d-flex align-items-start">
+                  <BsGripVertical className="me-3 mt-5 fs-3" />
+                  <PiNotePencilFill className="me-3 mt-5 fs-3 text-success" />
+                  <div className="mt-2">
+                    <a
+                      className="wd-assignment-link text-black text-decoration-none"
+                      href={`#/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
+                    >
+                      <b className="fs-4">{assignment.title}</b>
+                    </a>
+                    <br />
+                    <p>
+                      <span className="text-danger">{assignment.modules}</span>{" "}
+                      |<b> Not available until</b>{" "}
+                      {formatDate(assignment.availableDate)} |
+                    </p>
+                    <p>
+                      <b>Due</b> {formatDate(assignment.dueDate)} |{" "}
+                      {assignment.points} pts
+                    </p>
+                  </div>
+                  <div className="ms-auto">
+                    <LessonControlButtons />
+                  </div>
+                </li>
+              ))}
           </ul>
         </li>
       </ul>

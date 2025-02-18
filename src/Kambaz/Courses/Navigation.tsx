@@ -1,31 +1,59 @@
-import { Link } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import { courses } from "../Database";
 export default function CourseNavigation() {
+  const { cid } = useParams();
+  const course = courses.find((course) => course._id === cid);
+  const links = [
+    {
+      id: "wd-course-home-link",
+      label: "Home",
+    },
+    {
+      id: "wd-course-modules-link",
+      label: "Modules",
+    },
+    {
+      id: "wd-course-piazza-link",
+      label: "Piazza",
+    },
+    {
+      id: "wd-course-zoom-link",
+      label: "Zoom",
+    },
+    {
+      id: "wd-course-quizzes-link",
+      label: "Assignments",
+    },
+    {
+      id: "wd-course-assignments-link",
+      label: "Quizzes",
+    },
+    {
+      id: "wd-course-grades-link",
+      label: "Grades",
+    },
+    {
+      id: "wd-course-people-link",
+      label: "People",
+    },
+  ];
   return (
     <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
-      <Link to="/Kambaz/Courses/1234/Home" id="wd-course-home-link" className="list-group-item active border border-0">
-        Home
-      </Link>
-      <Link to="/Kambaz/Courses/1234/Modules" id="wd-course-modules-link" className="list-group-item text-danger border border-0">
-        Modules
-      </Link>
-      <Link to="/Kambaz/Courses/1234/Piazza" id="wd-course-piazza-link" className="list-group-item text-danger border border-0">
-        Piazza
-      </Link>
-      <Link to="/Kambaz/Courses/1234/Zoom" id="wd-course-zoom-link" className="list-group-item text-danger border border-0">
-        Zoom
-      </Link>
-      <Link to="/Kambaz/Courses/1234/Assignments" id="wd-course-quizzes-link" className="list-group-item text-danger border border-0">
-        Assignments
-      </Link>
-      <Link to="/Kambaz/Courses/1234/Quizzes" id="wd-course-assignments-link" className="list-group-item text-danger border border-0">
-        Quizzes
-      </Link>
-      <Link to="/Kambaz/Courses/1234/Grades" id="wd-course-grades-link" className="list-group-item text-danger border border-0">
-        Grades
-      </Link>
-      <Link to="/Kambaz/Courses/:cid/People" id="wd-course-people-link" className="list-group-item text-danger border border-0">
-        People
-      </Link>
+      {links.map(({ id, label }) => (
+        <NavLink
+          key={id}
+          to={`/Kambaz/Courses/${course && course._id}/${label}`}
+          id={id}
+          className={({ isActive }) =>
+            isActive
+              ? "list-group-item active border border-0"
+              : "list-group-item text-danger border border-0"
+          }
+          style={{ fontSize: "1rem", fontWeight: "normal" }}
+        >
+          {label}
+        </NavLink>
+      ))}
     </div>
   );
 }
