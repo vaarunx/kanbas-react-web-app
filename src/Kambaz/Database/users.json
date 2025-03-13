@@ -1,8 +1,8 @@
 [
   {
     "_id": "123",
-    "username": "faculty",
-    "password": "faculty",
+    "username": "professor",
+    "password": "professor",
     "firstName": "Tony",
     "lastName": "Stark",
     "email": "tony@stark.com",
@@ -29,8 +29,8 @@
   },
   {
     "_id": "345",
-    "username": "black_widow",
-    "password": "romanoff123",
+    "username": "ta#1",
+    "password": "teachingAssistant",
     "firstName": "Natasha",
     "lastName": "Romanoff",
     "email": "natasha@avengers.com",
