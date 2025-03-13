@@ -15,8 +15,8 @@
   },
   {
     "_id": "234",
-    "username": "student",
-    "password": "student",
+    "username": "student#1",
+    "password": "student#1",
     "firstName": "Bruce",
     "lastName": "Wayne",
     "email": "bruce@wayne.com",
