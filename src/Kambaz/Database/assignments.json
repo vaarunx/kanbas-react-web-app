@@ -118,5 +118,65 @@
     "dueDate": "2025-05-20T23:59",
     "points": "100",
     "description": "Analyze the causes and effects of a major revolution (e.g., French, American, Industrial). Discuss its global impact and long-term consequences."
+  },
+  {
+    "_id": "A701",
+    "title": "Neural Network Implementation",
+    "course": "CS202",
+    "modules": "Multiple Modules",
+    "availableDate": "2025-05-06T00:00",
+    "dueDate": "2025-05-13T23:59",
+    "points": "100",
+    "description": "Implement a basic neural network from scratch and train it on a dataset of your choice. Analyze the performance and discuss optimization techniques."
+  },
+  {
+    "_id": "A702",
+    "title": "AI Ethics and Bias Report",
+    "course": "CS202",
+    "modules": "Single Module",
+    "availableDate": "2025-05-14T00:00",
+    "dueDate": "2025-05-20T23:59",
+    "points": "50",
+    "description": "Research and discuss ethical concerns and bias in AI systems. Provide examples and propose possible solutions."
+  },
+  {
+    "_id": "A801",
+    "title": "Cell Biology Lab Report",
+    "course": "BI207",
+    "modules": "Multiple Modules",
+    "availableDate": "2025-05-06T00:00",
+    "dueDate": "2025-05-13T23:59",
+    "points": "100",
+    "description": "Conduct an experiment on cell structure using a microscope. Document your observations and explain the function of each organelle."
+  },
+  {
+    "_id": "A802",
+    "title": "Genetics and DNA Analysis",
+    "course": "BI207",
+    "modules": "Multiple Modules",
+    "availableDate": "2025-05-14T00:00",
+    "dueDate": "2025-05-20T23:59",
+    "points": "100",
+    "description": "Analyze a genetic inheritance pattern using Mendelian genetics. Predict the probability of genetic traits in offspring."
+  },
+  {
+    "_id": "A901",
+    "title": "Supply and Demand Case Study",
+    "course": "EC208",
+    "modules": "Multiple Modules",
+    "availableDate": "2025-05-06T00:00",
+    "dueDate": "2025-05-13T23:59",
+    "points": "100",
+    "description": "Select a product or industry and analyze how supply and demand principles affect its market prices and consumer behavior."
+  },
+  {
+    "_id": "A902",
+    "title": "Game Theory Application",
+    "course": "EC208",
+    "modules": "Multiple Modules",
+    "availableDate": "2025-05-14T00:00",
+    "dueDate": "2025-05-20T23:59",
+    "points": "100",
+    "description": "Apply game theory concepts to a real-world scenario. Create a strategic decision matrix and analyze optimal choices for market participants."
   }
 ]
