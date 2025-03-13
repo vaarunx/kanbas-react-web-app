@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Button,
   Col,
@@ -10,13 +11,27 @@ import {
   Row,
 } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router";
-import { assignments } from "../../Database";
 import { SlCalender } from "react-icons/sl";
 
+import { updateAssignment, setAssignment } from "./reducer";
+import { useDispatch, useSelector } from "react-redux";
+
 export default function AssignmentEditor() {
-  const { cid, aid } = useParams();
-  const assignment = assignments.find((assignment) => assignment._id === aid);
+  const { cid } = useParams();
   const path = useNavigate();
+
+  const { assignment } = useSelector((state: any) => state.assignmentReducer);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSave = () => {
+      dispatch(
+        updateAssignment({
+          ...assignment,
+        })
+      );
+    navigate(`/Kambaz/Courses/${cid}/Assignments`);
+  };
 
   const handleButtonClick = () => {
     path(`/Kambaz/Courses/${cid}/Assignments`);
@@ -31,6 +46,9 @@ export default function AssignmentEditor() {
             type="text"
             id="wd-name"
             defaultValue={assignment && assignment.title}
+            onChange={(e) =>
+              dispatch(setAssignment({ ...assignment, title: e.target.value }))
+            }
           />
         </FormGroup>
 
@@ -39,6 +57,11 @@ export default function AssignmentEditor() {
             as="textarea"
             id="wd-description"
             defaultValue={assignment && assignment.description}
+            onChange={(e) =>
+              dispatch(
+                setAssignment({ ...assignment, description: e.target.value })
+              )
+            }
           />
         </FormGroup>
 
@@ -56,6 +79,11 @@ export default function AssignmentEditor() {
                   id="wd-points"
                   type="number"
                   defaultValue={assignment && assignment.points}
+                  onChange={(e) =>
+                    dispatch(
+                      setAssignment({ ...assignment, points: e.target.value })
+                    )
+                  }
                 />
               </Col>
             </FormGroup>
@@ -170,6 +198,11 @@ export default function AssignmentEditor() {
                       defaultValue={
                         assignment && assignment.dueDate.split("T")[0]
                       }
+                      onChange={(e) =>
+                        dispatch(
+                          setAssignment({ ...assignment, dueDate: e.target.value })
+                        )
+                      }
                     />
                     <span className="input-group-text">
                       <SlCalender />
@@ -187,6 +220,11 @@ export default function AssignmentEditor() {
                           id="wd-available-from"
                           defaultValue={
                             assignment && assignment.availableDate.split("T")[0]
+                          }
+                          onChange={(e) =>
+                            dispatch(
+                              setAssignment({ ...assignment, availableDate: e.target.value })
+                            )
                           }
                         />
                         <span className="input-group-text">
@@ -223,7 +261,7 @@ export default function AssignmentEditor() {
               >
                 Cancel
               </Button>
-              <Button onClick={handleButtonClick} variant="danger">
+              <Button onClick={handleSave} variant="danger">
                 Save
               </Button>
             </div>

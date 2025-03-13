@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BsGripVertical } from "react-icons/bs";
-import LessonControlButtons from "../Modules/LessonControlButtons";
-import { IoEllipsisVertical } from "react-icons/io5";
-import { CiSearch } from "react-icons/ci";
-import { BsPlus } from "react-icons/bs";
-import { PiNotePencilFill } from "react-icons/pi";
-import { useParams } from "react-router";
-import { assignments } from "../../Database";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setAssignment, deleteAssignment, addAssignment } from "./reducer";
+import DescriptionControlButtonsEnd from "./DescriptiveControlButtonEnd";
+import DescriptionControlButtonsStart from "./DescriptiveControlButtonStart";
+import { FaTrash } from "react-icons/fa";
+import AssignmentControlButton from "./AssignmentControlButton";
+import AssignmentControls from "./AssignmentControls";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignment = assignments;
 
   function formatDate(dateStr: string | Date) {
     const date = new Date(dateStr);
@@ -24,33 +24,16 @@ export default function Assignments() {
     });
   }
 
+  const { assignments } = useSelector((state: any) => state.assignmentReducer);
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+
   return (
     <div id="wd-assignments">
-      <div className="d-flex justify-content-between align-items-center flex-wrap">
-        <div className="mb-2 mb-lg-0 w-40 mt-1">
-          <form className="d-flex " role="search">
-            <CiSearch className="position-absolute mt-2 ms-2" size={20} />
-            <input
-              className="form-control h-48 w-95"
-              id="wd-search-assignment"
-              type="search"
-              placeholder="Search..."
-              style={{ paddingLeft: "35px" }}
-            />
-          </form>
-        </div>
-        <div className="d-flex">
-          <button
-            id="wd-add-assignment-group"
-            className="btn btn-m me-1 btn-secondary"
-          >
-            + Group
-          </button>
-          <button id="wd-add-assignment" className="btn btn-m btn-danger me-1">
-            + Assignment
-          </button>
-        </div>
-      </div>
+      <AssignmentControls
+        addAssignment={() => dispatch(addAssignment(cid))}
+      />
+
       <ul id="wd-modules" className="list-group rounded-0 mt-5">
         <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
           <div
@@ -65,26 +48,23 @@ export default function Assignments() {
               <span className="border border-grey rounded-5 p-2">
                 40% of Total
               </span>
-              <button className="btn btn-lg ">
-                <BsPlus className="fs-2" />
-              </button>
             </div>
-            <IoEllipsisVertical className="fs-4" />
+            <AssignmentControlButton />
           </div>
           <ul className="wd-lessons list-group rounded-0">
-            {assignment
+            {assignments
               .filter((assignment: any) => assignment.course === cid)
               .map((assignment: any) => (
                 <li className="wd-lesson wd-assignment-list-item list-group-item p-3 ps-1 d-flex align-items-start">
-                  <BsGripVertical className="me-3 mt-5 fs-3" />
-                  <PiNotePencilFill className="me-3 mt-5 fs-3 text-success" />
+                  <DescriptionControlButtonsStart />
                   <div className="mt-2">
-                    <a
-                      className="wd-assignment-link text-black text-decoration-none"
-                      href={`#/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
+                    <Link
+                      className="wd-assignment-link text-black link-underline link-underline-opacity-0"
+                      to={`./${assignment._id}`}
+                      onClick={() => dispatch(setAssignment(assignment))}
                     >
                       <b className="fs-4">{assignment.title}</b>
-                    </a>
+                    </Link>
                     <br />
                     <p>
                       <span className="text-danger">{assignment.modules}</span>{" "}
@@ -97,7 +77,21 @@ export default function Assignments() {
                     </p>
                   </div>
                   <div className="ms-auto">
-                    <LessonControlButtons />
+                    {currentUser.role === "FACULTY" && (
+                      <FaTrash
+                        className="text-danger me-2"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const confirmDelete = window.confirm(
+                            "Are you sure you want to delete this assignment?"
+                          );
+                          if (confirmDelete) {
+                            dispatch(deleteAssignment(assignment._id));
+                          }
+                        }}
+                      />
+                    )}
+                    <DescriptionControlButtonsEnd />
                   </div>
                 </li>
               ))}

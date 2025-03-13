@@ -1,8 +1,8 @@
 [
   {
     "_id": "123",
-    "username": "iron_man",
-    "password": "stark123",
+    "username": "faculty",
+    "password": "faculty",
     "firstName": "Tony",
     "lastName": "Stark",
     "email": "tony@stark.com",
@@ -15,8 +15,8 @@
   },
   {
     "_id": "234",
-    "username": "dark_knight",
-    "password": "wayne123",
+    "username": "student",
+    "password": "student",
     "firstName": "Bruce",
     "lastName": "Wayne",
     "email": "bruce@wayne.com",
@@ -71,8 +71,8 @@
   },
   {
     "_id": "678",
-    "username": "ring_bearer",
-    "password": "shire123",
+    "username": "faculty2",
+    "password": "faculty",
     "firstName": "Frodo",
     "lastName": "Baggins",
     "email": "frodo@shire.com",

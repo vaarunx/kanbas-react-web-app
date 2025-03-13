@@ -1,8 +1,6 @@
 import { NavLink, useParams } from "react-router-dom";
-import { courses } from "../Database";
 export default function CourseNavigation() {
   const { cid } = useParams();
-  const course = courses.find((course) => course._id === cid);
   const links = [
     {
       id: "wd-course-home-link",
@@ -42,7 +40,7 @@ export default function CourseNavigation() {
       {links.map(({ id, label }) => (
         <NavLink
           key={id}
-          to={`/Kambaz/Courses/${course && course._id}/${label}`}
+          to={`/Kambaz/Courses/${cid}/${label}`}
           id={id}
           className={({ isActive }) =>
             isActive
