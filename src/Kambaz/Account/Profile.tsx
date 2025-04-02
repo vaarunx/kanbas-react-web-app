@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as client from "./client";
-
 import { Button, Form, FormGroup, FormSelect } from "react-bootstrap";
 import { SlCalender } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
-
+import * as client from "./client";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentUser } from "./reducer";
@@ -15,6 +13,7 @@ export default function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
+
   const updateProfile = async () => {
     const updatedProfile = await client.updateUser(profile);
     dispatch(setCurrentUser(updatedProfile));
@@ -38,14 +37,6 @@ export default function Profile() {
       <h2>Profile</h2>
       {profile && (
         <div>
-          <button
-            onClick={updateProfile}
-            className="btn btn-primary w-100 mb-2"
-          >
-            {" "}
-            Update{" "}
-          </button>
-
           <Form.Control
             defaultValue={profile.username}
             placeholder="username"
@@ -115,6 +106,13 @@ export default function Profile() {
             <option value="FACULTY">Faculty</option>
             <option value="STUDENT">Student</option>
           </FormSelect>
+          <Button
+            onClick={updateProfile}
+            className="btn btn-primary w-100 mb-2"
+          >
+            {" "}
+            Update{" "}
+          </Button>
           <Button
             onClick={signout}
             className="btn btn-danger w-100 mb-2"

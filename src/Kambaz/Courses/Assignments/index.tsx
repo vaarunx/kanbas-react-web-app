@@ -1,13 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BsGripVertical } from "react-icons/bs";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setAssignment, deleteAssignment, addAssignment } from "./reducer";
+import {
+  setAssignments,
+  setAssignment,
+  deleteAssignment,
+  addAssignment,
+} from "./reducer";
 import DescriptionControlButtonsEnd from "./DescriptiveControlButtonEnd";
 import DescriptionControlButtonsStart from "./DescriptiveControlButtonStart";
 import { FaTrash } from "react-icons/fa";
 import AssignmentControlButton from "./AssignmentControlButton";
 import AssignmentControls from "./AssignmentControls";
+import { useEffect } from "react";
+import * as coursesClient from "../client";
+import * as assignmentClient from "./client";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -28,11 +36,38 @@ export default function Assignments() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
+  const fetchAssignments = async () => {
+    const assignments = await coursesClient.findAssignmentsForCourse(
+      cid as string
+    );
+    dispatch(setAssignments(assignments));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+
+  const navigate = useNavigate();
+
+  const createAssignmentForCourse = async () => {
+    if (!cid) return;
+    const newAssignment = { course: cid, modules: "Multiple Modules" };
+    const assignment = await coursesClient.createAssignmentForCourse(
+      cid,
+      newAssignment
+    );
+    dispatch(addAssignment(assignment));
+    navigate(`/Kambaz/Courses/${cid}/Assignments/${assignment?._id}`);
+  };
+
+  const deleteAssignmentForCourse = async (assignmentId: string) => {
+    await assignmentClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
+
   return (
     <div id="wd-assignments">
-      <AssignmentControls
-        addAssignment={() => dispatch(addAssignment(cid))}
-      />
+      <AssignmentControls addAssignment={createAssignmentForCourse} />
 
       <ul id="wd-modules" className="list-group rounded-0 mt-5">
         <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
@@ -52,49 +87,47 @@ export default function Assignments() {
             <AssignmentControlButton />
           </div>
           <ul className="wd-lessons list-group rounded-0">
-            {assignments
-              .filter((assignment: any) => assignment.course === cid)
-              .map((assignment: any) => (
-                <li className="wd-lesson wd-assignment-list-item list-group-item p-3 ps-1 d-flex align-items-start">
-                  <DescriptionControlButtonsStart />
-                  <div className="mt-2">
-                    <Link
-                      className="wd-assignment-link text-black link-underline link-underline-opacity-0"
-                      to={`./${assignment._id}`}
-                      onClick={() => dispatch(setAssignment(assignment))}
-                    >
-                      <b className="fs-4">{assignment.title}</b>
-                    </Link>
-                    <br />
-                    <p>
-                      <span className="text-danger">{assignment.modules}</span>{" "}
-                      |<b> Not available until</b>{" "}
-                      {formatDate(assignment.availableDate)} |
-                    </p>
-                    <p>
-                      <b>Due</b> {formatDate(assignment.dueDate)} |{" "}
-                      {assignment.points} pts
-                    </p>
-                  </div>
-                  <div className="ms-auto">
-                    {currentUser.role === "FACULTY" && (
-                      <FaTrash
-                        className="text-danger me-2"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          const confirmDelete = window.confirm(
-                            "Are you sure you want to delete this assignment?"
-                          );
-                          if (confirmDelete) {
-                            dispatch(deleteAssignment(assignment._id));
-                          }
-                        }}
-                      />
-                    )}
-                    <DescriptionControlButtonsEnd />
-                  </div>
-                </li>
-              ))}
+            {assignments.map((assignment: any) => (
+              <li className="wd-lesson wd-assignment-list-item list-group-item p-3 ps-1 d-flex align-items-start">
+                <DescriptionControlButtonsStart />
+                <div className="mt-2">
+                  <Link
+                    className="wd-assignment-link text-black link-underline link-underline-opacity-0"
+                    to={`./${assignment._id}`}
+                    onClick={() => dispatch(setAssignment(assignment))}
+                  >
+                    <b className="fs-4">{assignment.title}</b>
+                  </Link>
+                  <br />
+                  <p>
+                    <span className="text-danger">{assignment.modules}</span> |
+                    <b> Not available until</b>{" "}
+                    {formatDate(assignment.availableDate)} |
+                  </p>
+                  <p>
+                    <b>Due</b> {formatDate(assignment.dueDate)} |{" "}
+                    {assignment.points} pts
+                  </p>
+                </div>
+                <div className="ms-auto">
+                  {currentUser.role === "FACULTY" && (
+                    <FaTrash
+                      className="text-danger me-2"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const confirmDelete = window.confirm(
+                          "Are you sure you want to delete this assignment?"
+                        );
+                        if (confirmDelete) {
+                          deleteAssignmentForCourse(assignment._id);
+                        }
+                      }}
+                    />
+                  )}
+                  <DescriptionControlButtonsEnd />
+                </div>
+              </li>
+            ))}
           </ul>
         </li>
       </ul>

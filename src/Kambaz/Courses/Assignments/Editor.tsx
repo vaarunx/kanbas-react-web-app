@@ -15,6 +15,7 @@ import { SlCalender } from "react-icons/sl";
 
 import { updateAssignment, setAssignment } from "./reducer";
 import { useDispatch, useSelector } from "react-redux";
+import * as assignmentsClient from "./client";
 
 export default function AssignmentEditor() {
   const { cid } = useParams();
@@ -24,12 +25,15 @@ export default function AssignmentEditor() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+
   const handleSave = () => {
-      dispatch(
-        updateAssignment({
-          ...assignment,
-        })
-      );
+    assignmentsClient.updateAssignment(assignment);
+    dispatch(
+      updateAssignment({
+        ...assignment,
+      })
+    );
     navigate(`/Kambaz/Courses/${cid}/Assignments`);
   };
 
@@ -196,11 +200,16 @@ export default function AssignmentEditor() {
                       type="date"
                       id="wd-due-date"
                       defaultValue={
-                        assignment && assignment.dueDate.split("T")[0]
+                        assignment &&
+                        assignment.dueDate &&
+                        assignment.dueDate.split("T")[0]
                       }
                       onChange={(e) =>
                         dispatch(
-                          setAssignment({ ...assignment, dueDate: e.target.value })
+                          setAssignment({
+                            ...assignment,
+                            dueDate: e.target.value,
+                          })
                         )
                       }
                     />
@@ -219,11 +228,16 @@ export default function AssignmentEditor() {
                           type="date"
                           id="wd-available-from"
                           defaultValue={
-                            assignment && assignment.availableDate.split("T")[0]
+                            assignment &&
+                            assignment.availableDate &&
+                            assignment.availableDate.split("T")[0]
                           }
                           onChange={(e) =>
                             dispatch(
-                              setAssignment({ ...assignment, availableDate: e.target.value })
+                              setAssignment({
+                                ...assignment,
+                                availableDate: e.target.value,
+                              })
                             )
                           }
                         />
@@ -253,18 +267,20 @@ export default function AssignmentEditor() {
             </FormGroup>
 
             <hr />
-            <div className="d-flex justify-content-end">
-              <Button
-                onClick={handleButtonClick}
-                variant="secondary"
-                className="me-2"
-              >
-                Cancel
-              </Button>
-              <Button onClick={handleSave} variant="danger">
-                Save
-              </Button>
-            </div>
+            {currentUser.role === "FACULTY" && (
+              <div className="d-flex justify-content-end">
+                <Button
+                  onClick={handleButtonClick}
+                  variant="secondary"
+                  className="me-2"
+                >
+                  Cancel
+                </Button>
+                <Button onClick={handleSave} variant="danger">
+                  Save
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </Form>

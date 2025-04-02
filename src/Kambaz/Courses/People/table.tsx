@@ -1,13 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import * as db from "../../Database";
 import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import * as userClient from "../../Account/client";
+import { useEffect, useState } from "react";
+
 export default function PeopleTable() {
   const { cid } = useParams();
-  const { users } = db;
+  const [users, setUsers] = useState<any[]>([]);
   const { enrollments } = useSelector((state: any) => state.enrollmentReducer);
+
+  const fetchAllUsers = async () => {
+    const data = await userClient.fetchAllUsers();
+    setUsers(data);
+    return data;
+  };
+
+  useEffect(() => {
+    fetchAllUsers();
+  }, []);
 
   return (
     <div id="wd-people-table">
