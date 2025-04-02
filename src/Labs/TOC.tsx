@@ -74,9 +74,23 @@ export default function TOC() {
       </Nav.Item>
       <Nav.Item>
         {" "}
-        <Nav.Link href="https://github.com/vaarunx" target="_blank">
+        <Nav.Link href="https://github.com/vaarunx/kambaz-node-server-app" target="_blank">
           {" "}
-          My GitHub{" "}
+          Backend - Github Repo{" "}
+        </Nav.Link>{" "}
+      </Nav.Item>
+      <Nav.Item>
+        {" "}
+        <Nav.Link href="https://github.com/vaarunx/kanbas-react-web-app" target="_blank">
+          {" "}
+          UI - Github Repo{" "}
+        </Nav.Link>{" "}
+      </Nav.Item>
+      <Nav.Item>
+        {" "}
+        <Nav.Link href="https://kambaz-node-server-app-wc9j.onrender.com/" target="_blank">
+          {" "}
+          Backend - Website{" "}
         </Nav.Link>{" "}
       </Nav.Item>
     </Nav>
