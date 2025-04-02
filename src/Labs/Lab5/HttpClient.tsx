@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useEffect, useState } from "react";
 import * as client from "./client";
 
 const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
