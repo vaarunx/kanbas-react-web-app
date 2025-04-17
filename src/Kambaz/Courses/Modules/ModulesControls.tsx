@@ -5,9 +5,8 @@ import { Button, Dropdown } from "react-bootstrap";
 import NowaitinSign from "./NowaitingSign";
 import ModuleEditor from "./ModuleEditor";
 import { useState } from "react";
-import {useSelector} from "react-redux";
-import GreenCheckmark from "./GreenCheckMark";
-
+import { useSelector } from "react-redux";
+import GreenCheckmark from "./GreenCheckmark";
 
 export default function ModulesControls({
   moduleName,
@@ -25,16 +24,21 @@ export default function ModulesControls({
 
   return (
     <div id="wd-modules-controls" className="text-nowrap">
-      { currentUser.role === "FACULTY" && <Button
-        variant="danger"
-        size="lg"
-        className="me-1 float-end"
-        onClick={handleShow} 
-        id="wd-add-module-btn"
-      >
-        <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
-        Module
-      </Button> }
+      {currentUser.role === "FACULTY" && (
+        <Button
+          variant="danger"
+          size="lg"
+          className="me-1 float-end"
+          onClick={handleShow}
+          id="wd-add-module-btn"
+        >
+          <FaPlus
+            className="position-relative me-2"
+            style={{ bottom: "1px" }}
+          />
+          Module
+        </Button>
+      )}
       <Dropdown className="float-end me-2">
         <Dropdown.Toggle variant="secondary" size="lg" id="wd-publish-all-btn">
           <GreenCheckmark /> Publish All
@@ -73,8 +77,14 @@ export default function ModulesControls({
       >
         Collapse All
       </Button>
-      <ModuleEditor show={show} handleClose={handleClose} dialogTitle="Add Module"
-       moduleName={moduleName} setModuleName={setModuleName} addModule={addModule} />
+      <ModuleEditor
+        show={show}
+        handleClose={handleClose}
+        dialogTitle="Add Module"
+        moduleName={moduleName}
+        setModuleName={setModuleName}
+        addModule={addModule}
+      />
     </div>
   );
 }
