@@ -2,11 +2,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-// import PeopleTable from "../Courses/People/Table";
+import PeopleTable from "../Courses/People/PeopleTable";
 import * as client from "./client";
 import { FormControl } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
-import PeopleTable from "../Courses/People/PeopleTable";
 export default function Users() {
   const [users, setUsers] = useState<any[]>([]);
   const { uid } = useParams();
@@ -49,9 +48,11 @@ export default function Users() {
     const users = await client.fetchAllUsers();
     setUsers(users);
   };
+
   useEffect(() => {
     fetchUsers();
   }, [uid]);
+
   return (
     <div>
       <button onClick={createUser} className="float-end btn btn-danger wd-add-people">

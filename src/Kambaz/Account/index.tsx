@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Routes } from "react-router-dom";
-import Signin from "./Signin";
-import { Navigate, Route } from "react-router";
-import Profile from "./Profile";
-import Signup from "./Signup";
+import { Routes, Route, Navigate } from "react-router";
+import Signin from "./SignIn";
+import Profile from "./Profile1";
+import Signup from "./SignUp";
 import AccountNavigation from "./Navigation";
 import { useSelector } from "react-redux";
 import Users from "./Users";
@@ -24,7 +23,6 @@ export default function Account() {
           <Route path="/Signup" element={<Signup />} />
           <Route path="/Users" element={<Users />} />
           <Route path="/Users/:uid" element={<Users />} />
-
         </Routes>
       </div>
     </div>

@@ -1,17 +1,32 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { FaCheck, FaUserCircle } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { useParams, useNavigate } from "react-router";
 import * as client from "../../Account/client";
-import { FormControl } from "react-bootstrap";
 import { FaPencil } from "react-icons/fa6";
 export default function PeopleDetails() {
   const { uid } = useParams();
   const [user, setUser] = useState<any>({});
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
+  const [name, setName] = useState("");
+  const [editing, setEditing] = useState({
+    name: false,
+    email: false,
+    role: false,
+  });
+  const saveUser = async () => {
+    const [firstName, lastName] = name.split(" ");
+    const updatedUser = { ...user, firstName, lastName, email, role };
+    await client.updateUser(updatedUser);
+    setUser(updatedUser);
+    setEditing({ name: false, email: false, role: false });
+    navigate(-1);
+  };
+
   const deleteUser = async (uid: string) => {
     await client.deleteUser(uid);
     navigate(-1);
@@ -21,22 +36,15 @@ export default function PeopleDetails() {
     if (!uid) return;
     const user = await client.findUserById(uid);
     setUser(user);
+    setName(`${user.firstName} ${user.lastName}`);
+    setEmail(user.email);
+    setRole(user.role);
   };
+
   useEffect(() => {
     if (uid) fetchUser();
   }, [uid]);
   if (!uid) return null;
-
-  const [name, setName] = useState("");
-  const [editing, setEditing] = useState(false);
-  const saveUser = async () => {
-    const [firstName, lastName] = name.split(" ");
-    const updatedUser = { ...user, firstName, lastName };
-    await client.updateUser(updatedUser);
-    setUser(updatedUser);
-    setEditing(false);
-    navigate(-1);
-  };
 
   return (
     <div className="wd-people-details position-fixed top-0 end-0 bottom-0 bg-white p-4 shadow w-25">
@@ -52,38 +60,81 @@ export default function PeopleDetails() {
       </div>
       <hr />
       <div className="text-danger fs-4 wd-name">
-        {!editing && (
-          <FaPencil
-            onClick={() => setEditing(true)} 
-            className="float-end fs-5 mt-2 wd-edit"
-          />
-        )}
-        {editing && (
+        {editing.name ? (
           <FaCheck
             onClick={() => saveUser()}
             className="float-end fs-5 mt-2 me-2 wd-save"
           />
+        ) : (
+          <FaPencil
+            onClick={() => setEditing({ ...editing, name: true })}
+            className="float-end fs-5 mt-2 wd-edit"
+          />
         )}
-        {!editing && (
-          <div className="wd-name" onClick={() => setEditing(true)}>
+        {editing.name ? (
+          <input
+            className="form-control w-50 wd-edit-name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && saveUser()}
+          />
+        ) : (
+          <div>
             {user.firstName} {user.lastName}
           </div>
         )}
-        {user && editing && (
-          <FormControl
-            className="w-50 wd-edit-name"
-            defaultValue={`${user.firstName} ${user.lastName}`}
-            onChange={(e) => setName(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                saveUser();
-              }
-            }}
-          />
-        )}{" "}
-        {user.firstName} {user.lastName}{" "}
       </div>
-      <b>Roles:</b> <span className="wd-roles"> {user.role} </span> <br />
+      <div>
+        <b>Email: </b>
+        {editing.email ? (
+          <input
+            className="form-control w-50"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && saveUser()}
+          />
+        ) : (
+          <>
+            <span className="wd-email">{email}</span>
+            <FaPencil
+              onClick={() => setEditing({ ...editing, email: true })}
+              className="ms-2 wd-edit"
+            />
+          </>
+        )}
+      </div>
+      <div>
+        <b>Role: </b>
+        {editing.role ? (
+          <>
+            <select
+              className="form-select w-50"
+              value={role}
+              onChange={(e) => {
+                const newRole = e.target.value;
+                setRole(newRole); // Update the role in state
+                // saveUser(); // Save immediately after selection
+              }}
+            >
+              <option value="STUDENT">Student</option>
+              <option value="TA">Assistant</option>
+              <option value="FACULTY">Faculty</option>
+              <option value="ADMIN">Administrator</option>
+            </select>
+            <FaCheck onClick={saveUser} className="ms-2 wd-save" />
+          </>
+        ) : (
+          <>
+            <span className="wd-roles">{role}</span>
+            <FaPencil
+              onClick={() => setEditing({ ...editing, role: true })}
+              className="ms-2 wd-edit"
+            />
+          </>
+        )}
+      </div>
+      {/* <b>Roles:</b> <span className="wd-roles"> {user.role} </span> <br />
+      <b>Email: </b> <span className="wd-email">{user.email}</span> <br /> */}
       <b>Login ID:</b> <span className="wd-login-id"> {user.loginId} </span>{" "}
       <br />
       <b>Section:</b> <span className="wd-section"> {user.section} </span>{" "}

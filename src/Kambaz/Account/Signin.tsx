@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import * as client from "./client";
 import { Button, FormControl } from "react-bootstrap";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { setCurrentUser } from "./reducer";
 import { useDispatch } from "react-redux";
-// import * as db from "../Database";
-import * as client from "./client";
 
 export default function Signin() {
   const [credentials, setCredentials] = useState<any>({});

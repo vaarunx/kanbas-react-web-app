@@ -4,7 +4,7 @@ import Account from "./Account";
 import Dashboard from "./Dashboard";
 import Courses from "./Courses";
 import KambazNavigation from "./Navigation";
-import "./styles.css";
+import "./style.css";
 import { useEffect, useState } from "react";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import { useSelector } from "react-redux";

@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 body * {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -12,7 +13,7 @@ body * {
   }
 }
 
-.list-group.wd > .list-group-item.active {
+.list-group.wd>.list-group-item.active {
   color: black;
   background-color: white;
   border-left: 3px solid black !important;
@@ -24,13 +25,15 @@ body * {
   --bs-btn-border-color: #c7cdd1 !important;
   --bs-btn-hover-color: #fff !important;
 }
+
 .bg-secondary {
   --bs-secondary-rgb: 199, 205, 209;
 }
+
 .list-group-item {
   --bs-list-group-border-color: gray;
 }
+
 .wd-lesson {
   border-left: 3px solid green !important;
 }
-

@@ -3,7 +3,7 @@
 import { FormControl, ListGroup } from "react-bootstrap";
 import { useParams } from "react-router";
 import ModulesControls from "./ModulesControls";
-import ModulesControlsButton from "./ModuleControlButtons";
+import ModulesControlsButton from "./ModulesControlButtons";
 import { BsGripVertical } from "react-icons/bs";
 import LessonControlButtons from "./LessonControlButtons";
 import { useState, useEffect } from "react";
@@ -86,8 +86,8 @@ export default function Modules() {
               )}
               <ModulesControlsButton
                 moduleId={module._id}
-                deleteModule={(moduleId: string) => removeModule(moduleId)}
-                editModule={(moduleId: any) => dispatch(editModule(moduleId))}
+                deleteModule={(moduleId) => removeModule(moduleId)}
+                editModule={(moduleId) => dispatch(editModule(moduleId))}
               />
             </div>
             {module.lessons && (

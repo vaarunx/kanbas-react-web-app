@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FaPlus } from "react-icons/fa6";
-import GreenCheckmark from "./GreenCheckmark";
+import GreenCheckmark from "./GreenCheckMark";
 import { Button, Dropdown } from "react-bootstrap";
-import NowaitingSign from "./NowaitingSign";
-import ModuleEditor from "./ModulesEditor";
+import NowaitinSign from "./NowaitingSign";
+import ModuleEditor from "./ModuleEditor";
 import { useState } from "react";
 import {useSelector} from "react-redux";
 
@@ -49,10 +49,10 @@ export default function ModulesControls({
             <GreenCheckmark /> Publish modules only
           </Dropdown.Item>
           <Dropdown.Item id="wd-unpublish-all-modules-and-items">
-            <NowaitingSign /> Unpublish all modules and items
+            <NowaitinSign /> Unpublish all modules and items
           </Dropdown.Item>
           <Dropdown.Item id="wd-unpublish-modules-only">
-            <NowaitingSign /> Unpublish modules only
+            <NowaitinSign /> Unpublish modules only
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

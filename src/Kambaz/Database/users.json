@@ -1,8 +1,8 @@
 [
   {
     "_id": "123",
-    "username": "professor",
-    "password": "professor",
+    "username": "faculty",
+    "password": "faculty",
     "firstName": "Tony",
     "lastName": "Stark",
     "email": "tony@stark.com",
@@ -15,8 +15,8 @@
   },
   {
     "_id": "234",
-    "username": "student#1",
-    "password": "student#1",
+    "username": "student",
+    "password": "student",
     "firstName": "Bruce",
     "lastName": "Wayne",
     "email": "bruce@wayne.com",
@@ -29,8 +29,8 @@
   },
   {
     "_id": "345",
-    "username": "ta#1",
-    "password": "teachingAssistant",
+    "username": "black_widow",
+    "password": "romanoff123",
     "firstName": "Natasha",
     "lastName": "Romanoff",
     "email": "natasha@avengers.com",

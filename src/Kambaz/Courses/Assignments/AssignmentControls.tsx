@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FaPlus } from "react-icons/fa6";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { CiSearch } from "react-icons/ci";
 export default function AssignmentControls({
@@ -10,15 +11,10 @@ export default function AssignmentControls({
 }) {
   const { cid } = useParams();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const { assignment } = useSelector(
-    (state: any) => state.assignmentReducer.assignment
-  );
-  const navigate = useNavigate();
 
   const handleAssignment = () => {
-    if (cid) {
+    if (cid) { 
       addAssignment(cid);
-      navigate(`/Kambaz/Courses/${cid}/Assignments/${assignment?._id}`);
     } else {
       console.error("Course ID (cid) is undefined");
     }

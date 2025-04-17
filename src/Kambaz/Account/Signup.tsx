@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
+import { FormControl } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as client from "./client";
-import { useDispatch } from "react-redux";
 import { setCurrentUser } from "./reducer";
-import { FormControl } from "react-bootstrap";
+
 export default function Signup() {
   const [user, setUser] = useState<any>({});
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function Signup() {
     dispatch(setCurrentUser(currentUser));
     navigate("/Kambaz/Account/Profile");
   };
+
   return (
     <div className="wd-signup-screen">
       <h1>Sign up</h1>

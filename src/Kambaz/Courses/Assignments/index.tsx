@@ -8,10 +8,10 @@ import {
   deleteAssignment,
   addAssignment,
 } from "./reducer";
-import DescriptionControlButtonsEnd from "./DescriptiveControlButtonEnd";
-import DescriptionControlButtonsStart from "./DescriptiveControlButtonStart";
+import DescriptionControlButtonsEnd from "./DescriptionControlButtonEnd";
+import DescriptionControlButtonsStart from "./DescriptionControlButtonStart";
 import { FaTrash } from "react-icons/fa";
-import AssignmentControlButton from "./AssignmentControlButton";
+import AssignmentControlButtons from "./AssignmentControlButtons";
 import AssignmentControls from "./AssignmentControls";
 import { useEffect } from "react";
 import * as coursesClient from "../client";
@@ -63,7 +63,7 @@ export default function Assignments() {
   const deleteAssignmentForCourse = async (assignmentId: string) => {
     await assignmentClient.deleteAssignment(assignmentId);
     dispatch(deleteAssignment(assignmentId));
-  };
+  }
 
   return (
     <div id="wd-assignments">
@@ -84,7 +84,7 @@ export default function Assignments() {
                 40% of Total
               </span>
             </div>
-            <AssignmentControlButton />
+            <AssignmentControlButtons />
           </div>
           <ul className="wd-lessons list-group rounded-0">
             {assignments.map((assignment: any) => (
