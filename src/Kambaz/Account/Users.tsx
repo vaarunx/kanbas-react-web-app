@@ -2,37 +2,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import PeopleTable from "../Courses/People/table";
+// import PeopleTable from "../Courses/People/Table";
 import * as client from "./client";
-import FormControl from "react-bootstrap/esm/FormControl";
-import { FaPlus } from "react-icons/fa6";
+import { FormControl } from "react-bootstrap";
+import { FaPlus } from "react-icons/fa";
+import PeopleTable from "../Courses/People/PeopleTable";
 export default function Users() {
   const [users, setUsers] = useState<any[]>([]);
   const { uid } = useParams();
-
   const [role, setRole] = useState("");
-  const [, setName] = useState("");
-  const filterUsersByName = async (name: string) => {
-    setName(name);
+  const [name, setName] = useState("");
+  const createUser = async () => {
+    const user = await client.createUser({
+      firstName: "Name",
+      lastName: `User${users.length + 1}`,
+      username: `user${Date.now()}`,
+      password: "123",
+      email: `email${users.length + 1}@neu.edu`,
+      section: "S101",
+      role: "STUDENT",
+    });
+    setUsers([...users, user]);
+  };
+
+  const filterUsersByName = async (n: string) => {
+    setName(n);
     if (name) {
       const users = await client.findUsersByPartialName(name);
       setUsers(users);
     } else {
       fetchUsers();
     }
-  };
-
-  const createUser = async () => {
-    const user = await client.createUser({
-      firstName: "New",
-      lastName: `User${users.length + 1}`,
-      username: `newuser${Date.now()}`,
-      password: "password123",
-      email: `email${users.length + 1}@neu.edu`,
-      section: "S101",
-      role: "STUDENT",
-    });
-    setUsers([...users, user]);
   };
 
   const filterUsersByRole = async (role: string) => {
@@ -46,7 +46,7 @@ export default function Users() {
   };
 
   const fetchUsers = async () => {
-    const users = await client.findAllUsers();
+    const users = await client.fetchAllUsers();
     setUsers(users);
   };
   useEffect(() => {
@@ -54,13 +54,11 @@ export default function Users() {
   }, [uid]);
   return (
     <div>
-      <button
-        onClick={createUser}
-        className="float-end btn btn-danger wd-add-people"
-      >
+      <button onClick={createUser} className="float-end btn btn-danger wd-add-people">
         <FaPlus className="me-2" />
         Users
       </button>
+      <h3>Users</h3>
       <FormControl
         onChange={(e) => filterUsersByName(e.target.value)}
         placeholder="Search people"

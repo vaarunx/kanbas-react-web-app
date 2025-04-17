@@ -2,86 +2,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Card, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setEnrollments,
-  addEnrollment,
-  deleteEnrollment,
-} from "./Courses/People/reducer";
-import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
-import * as enrollmentClient from "./Courses/People/client";
-
 export default function Dashboard({
-  allCourses,
   courses,
   course,
   setCourse,
   addNewCourse,
   deleteCourse,
   updateCourse,
-  fetchCourses,
+  enrolling,
+  setEnrolling,
+  updateEnrollment,
 }: {
-  allCourses: any[];
   courses: any[];
   course: any;
   setCourse: (course: any) => void;
   addNewCourse: () => void;
   deleteCourse: (course: any) => void;
   updateCourse: () => void;
-  fetchCourses: () => void;
+  enrolling: boolean;
+  setEnrolling: (enrolling: boolean) => void;
+  updateEnrollment: (courseId: string, enrolled: boolean) => void;
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const { enrollments } = useSelector((state: any) => state.enrollmentReducer);
-  const dispatch = useDispatch();
   const naviagte = useNavigate();
-
-  const fetchAllEnrollments = async () => {
-    const enrollmentss = await enrollmentClient.getEnrollments();
-    dispatch(setEnrollments(enrollmentss));
-  };
-
-  useEffect(() => {
-    fetchAllEnrollments();
-  }, []);
-
-  const [showAllCourses, setShowAllCourses] = useState(false);
-
-  const toggleShowAllCourses = () => {
-    setShowAllCourses(!showAllCourses);
-  };
-
-  const filteredCourses = showAllCourses ? allCourses : courses;
-
-  const isEnrolled = (courseId: any) => {
-    console.log("enrollments", enrollments);
-    return enrollments.some(
-      (enrollment: any) =>
-        enrollment.user === currentUser._id && enrollment.course === courseId
-    );
-  };
-
-  const enrollCourse = async (courseId: any) => {
-    const newEnrollment = await enrollmentClient.enrollCourse(
-      currentUser._id,
-      courseId
-    );
-    console.log("newEnrollment", newEnrollment);
-    dispatch(addEnrollment(newEnrollment));
-    fetchCourses();
-  };
-
-  const unenrollCourse = async (courseId: any) => {
-    await enrollmentClient.unenrollCourse(currentUser._id, courseId);
-    dispatch(
-      deleteEnrollment({
-        user: currentUser._id,
-        course: courseId,
-      })
-    );
-    fetchCourses();
-  };
 
   return (
     <div id="wd-dashboard">
@@ -122,20 +68,20 @@ export default function Dashboard({
         </>
       )}
       <h2 id="wd-dashboard-published">
-        Published Courses ({filteredCourses.length})
+        Published Courses ({courses.length})
         {currentUser.role === "STUDENT" && (
           <button
             className="btn btn-primary float-end"
-            onClick={toggleShowAllCourses}
+            onClick={() => setEnrolling(!enrolling)}
           >
-            {showAllCourses ? "Show Enrolled Courses" : "Show All Courses"}
+            {enrolling ? "Show Enrolled Courses" : "Show All Courses"}
           </button>
         )}
       </h2>{" "}
       <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
-          {filteredCourses.map((course) => (
+          {courses.map((course) => (
             <Col className="wd-dashboard-course" style={{ width: "300px" }}>
               <Card>
                 <Link
@@ -160,61 +106,44 @@ export default function Dashboard({
                     </Card.Text>
                     <Button variant="primary"> Go </Button>
                     {currentUser.role === "FACULTY" && (
-                        <>
-                          <button
-                            onClick={(event) => {
-                              event.preventDefault();
-                              deleteCourse(course._id);
-                            }}
-                            className="btn btn-danger float-end"
-                            id="wd-delete-course-click"
-                          >
-                            Delete
-                          </button>
-                          <button
-                            id="wd-edit-course-click"
-                            onClick={(event) => {
-                              event.preventDefault();
-                              setCourse(course);
-                            }}
-                            className="btn btn-warning me-2 float-end"
-                          >
-                            Edit
-                          </button>
-                        </>
-                      )}
-
-                    {currentUser.role === "STUDENT" &&
-                      isEnrolled(course._id) && (
-                        <>
-                          <button
-                            id="wd-unenroll"
-                            className="btn btn-danger me-2 float-end"
-                            onClick={(event) => {
-                              event.preventDefault();
-                              unenrollCourse(course._id);
-                              naviagte(`/Kambaz/Dashboard`);
-                            }}
-                          >
-                            Unenroll
-                          </button>
-                        </>
-                      )}
-
-                    {currentUser.role === "STUDENT" &&
-                      !isEnrolled(course._id) && (
+                      <>
                         <button
-                          id="wd-enroll"
-                          className="btn btn-success me-2 float-end"
                           onClick={(event) => {
                             event.preventDefault();
-                            enrollCourse(course._id);
-                            naviagte(`/Kambaz/Dashboard`);
+                            deleteCourse(course._id);
                           }}
+                          className="btn btn-danger float-end"
+                          id="wd-delete-course-click"
                         >
-                          Enroll
+                          Delete
                         </button>
-                      )}
+                        <button
+                          id="wd-edit-course-click"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            setCourse(course);
+                          }}
+                          className="btn btn-warning me-2 float-end"
+                        >
+                          Edit
+                        </button>
+                      </>
+                    )}
+
+                    {currentUser.role === "STUDENT" && enrolling && (
+                      <button
+                        onClick={(event) => {
+                          event.preventDefault();
+                          updateEnrollment(course._id, !course.enrolled);
+                          naviagte(`/Kambaz/Dashboard`);
+                        }}
+                        className={`btn ${
+                          course.enrolled ? "btn-danger" : "btn-success"
+                        } float-end`}
+                      >
+                        {course.enrolled ? "Unenroll" : "Enroll"}
+                      </button>
+                    )}
                   </Card.Body>
                 </Link>
               </Card>

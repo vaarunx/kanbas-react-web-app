@@ -12,12 +12,12 @@ import Home from "./Home";
 import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import { FaAlignJustify } from "react-icons/fa";
-import PeopleTable from "./People/table";
 import Quiz from "./Quizzes";
 import QuestionEditor from "./Quizzes/QuestionEditor/QuestionEditor";
 import QuizDetails from "./Quizzes/QuizDetails";
 import QuizEditor from "./Quizzes/QuizEditor";
 import QuizPreview from "./Quizzes/QuizPreview";
+import PeopleTable from "./People/table";
 
 export default function Courses({ courses }: { courses: any[] }) {
   const { cid } = useParams();

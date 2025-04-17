@@ -1,22 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
-const COURSES_API = `${REMOTE_SERVER}/api/courses`;
 const axiosWithCredentials = axios.create({ withCredentials: true });
 
-// Getting quizzes for the course
-export const findQuizzesForCourse = async (courseId: any) => {
-  const response = await axiosWithCredentials.get(
-    `${COURSES_API}/${courseId}/Quizzes`
-  );
-  return response.data;
-};
-
-// Creating new quizzes for the course
-export const createQuizForCourse = async (courseId: any, quiz: any) => {
-  const response = await axios.post(`${COURSES_API}/${courseId}/Quizzes`, quiz);
-  return response.data;
-};
+const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
+const COURSES_API = `${REMOTE_SERVER}/api/courses`;
 
 export const fetchAllCourses = async () => {
   const { data } = await axiosWithCredentials.get(COURSES_API);
@@ -66,5 +53,15 @@ export const createAssignmentForCourse = async (
     `${COURSES_API}/${courseId}/assignments`,
     assignment
   );
+  return response.data;
+};
+
+export const createCourse = async (course: any) => {
+  const { data } = await axiosWithCredentials.post(COURSES_API, course);
+  return data;
+};
+
+export const findUsersForCourse = async (courseId: any) => {
+  const response = await axios.get(`${COURSES_API}/${courseId}/users`);
   return response.data;
 };

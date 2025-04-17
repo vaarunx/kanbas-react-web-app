@@ -27,13 +27,13 @@ export default function AssignmentEditor() {
 
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
-  const handleSave = () => {
-    assignmentsClient.updateAssignment(assignment);
-    dispatch(
-      updateAssignment({
-        ...assignment,
-      })
-    );
+  const handleSave = async () => {
+    await assignmentsClient.updateAssignment(assignment);
+      dispatch(
+        updateAssignment({
+          ...assignment,
+        })
+      );
     navigate(`/Kambaz/Courses/${cid}/Assignments`);
   };
 
@@ -200,16 +200,11 @@ export default function AssignmentEditor() {
                       type="date"
                       id="wd-due-date"
                       defaultValue={
-                        assignment &&
-                        assignment.dueDate &&
-                        assignment.dueDate.split("T")[0]
+                        assignment && assignment.dueDate && assignment.dueDate.split("T")[0]
                       }
                       onChange={(e) =>
                         dispatch(
-                          setAssignment({
-                            ...assignment,
-                            dueDate: e.target.value,
-                          })
+                          setAssignment({ ...assignment, dueDate: e.target.value })
                         )
                       }
                     />
@@ -228,16 +223,11 @@ export default function AssignmentEditor() {
                           type="date"
                           id="wd-available-from"
                           defaultValue={
-                            assignment &&
-                            assignment.availableDate &&
-                            assignment.availableDate.split("T")[0]
+                            assignment && assignment.availableDate && assignment.availableDate.split("T")[0]
                           }
                           onChange={(e) =>
                             dispatch(
-                              setAssignment({
-                                ...assignment,
-                                availableDate: e.target.value,
-                              })
+                              setAssignment({ ...assignment, availableDate: e.target.value })
                             )
                           }
                         />
@@ -268,19 +258,18 @@ export default function AssignmentEditor() {
 
             <hr />
             {currentUser.role === "FACULTY" && (
-              <div className="d-flex justify-content-end">
-                <Button
-                  onClick={handleButtonClick}
-                  variant="secondary"
-                  className="me-2"
-                >
-                  Cancel
-                </Button>
-                <Button onClick={handleSave} variant="danger">
-                  Save
-                </Button>
-              </div>
-            )}
+            <div className="d-flex justify-content-end">
+              <Button
+                onClick={handleButtonClick}
+                variant="secondary"
+                className="me-2"
+              >
+                Cancel
+              </Button>
+              <Button onClick={handleSave} variant="danger">
+                Save
+              </Button>
+            </div>)}
           </div>
         </div>
       </Form>
