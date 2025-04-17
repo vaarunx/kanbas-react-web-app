@@ -16,7 +16,7 @@ const QuizQuestions = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [, setSelectedQuestion] = useState<any>(null);
+  // const [, setSelectedQuestion] = useState<any>(null);
 
   // const handleQuestionClick = (question: any) => {
   //   setSelectedQuestion(question);
