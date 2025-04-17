@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Routes, Route, Navigate } from "react-router";
-import Signin from "./SignIn";
+// import Signin from "./SignIn";
 import Profile from "./Profile1";
-import Signup from "./SignUp";
+// import Signup from "./SignUp";
 import AccountNavigation from "./Navigation";
 import { useSelector } from "react-redux";
 import Users from "./Users";
+import Signin from "./SignIn";
+import Signup from "./SignUp";
 
 export default function Account() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
