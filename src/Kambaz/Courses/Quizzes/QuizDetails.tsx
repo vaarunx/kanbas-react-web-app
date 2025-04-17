@@ -22,7 +22,7 @@ interface Answer {
   answer: string[]; // The answer is always an array of strings
 }
 
-export default function QuizDetails({ role = "faculty" }) {
+export default function QuizDetails() {
   const { currentUser } = useSelector((state: any) => state.accountReducer); // Get current user
   console.log(currentUser);
   const [userAttempts, setUserAttempts] = useState<Attempt[]>([]);

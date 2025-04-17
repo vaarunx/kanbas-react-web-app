@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdArrowDropDown, MdOutlineRocketLaunch } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";

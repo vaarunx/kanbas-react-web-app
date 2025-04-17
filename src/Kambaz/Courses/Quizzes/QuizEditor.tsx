@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { LuBan } from "react-icons/lu";
 import QuizDetail from "./QuizDetail";
@@ -11,7 +11,6 @@ import * as quizClient from "./client"; // Import the server client
 
 
 export default function QuizEditor() {
-  const { cid } = useParams();
   const { quizId } = useParams();
 
   // const { assignments } = useSelector((state: any) => state.assignmentReducer);

@@ -47,12 +47,12 @@ export default function QuizPreview() {
   const [userAttempts, setUserAttempts] = useState<Attempt[]>([]);
   const [quizQuestions, setQuizQuestions] = useState<any>([{}]);
   const [answers, setAnswers] = useState<Answer[]>([]);
-  const [time, setTime] = useState("");
+  const [, setTime] = useState("");
   const [score, setScore] = useState(0);
-  const [existingAttempt, setExistingAttempt] = useState<Attempt[]>([]);
+  // const [existingAttempt, setExistingAttempt] = useState<Attempt[]>([]);
   const [disable, setDisable] = useState(false);
   const [back, setBack] = useState(false);
-  const [quesId, setQuesId] = useState();
+  const [, setQuesId] = useState();
   let [att, setAtt] = useState<number | null>(null);
   useEffect(() => {
     if (quiz) {
