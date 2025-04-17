@@ -6,7 +6,7 @@ import { MdArrowDropDown, MdOutlineRocketLaunch } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
 // import { quizzes } from "../../Database";
 import * as quizClient from "./client";
-import * as coursesClient from "../client";
+// import * as coursesClient from "../client";
 import { setQuizzes, deleteQuiz, updateQuiz } from "./reducerQuiz";
 import { useDispatch, useSelector } from "react-redux";
 // import { ObjectId } from "mongodb";
@@ -24,7 +24,7 @@ export default function Quiz() {
   // );
 
   const fetchQuiz = async () => {
-    const quiz = await coursesClient.findQuizzesForCourse(cid as string);
+    // const quiz = await coursesClient.findQuizzesForCourse(cid as string);
     console.log("Inside fetchQuiz");
     dispatch(setQuizzes(quiz));
   };

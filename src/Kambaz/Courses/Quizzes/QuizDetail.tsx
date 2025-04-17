@@ -243,7 +243,6 @@ import { updateQuiz } from "./reducerQuiz"; // Import the updateQuiz action
 import { CgShapeHalfCircle } from "react-icons/cg";
 import {updateQuizz } from "./client"; // Client API
 import { useNavigate, useParams } from "react-router";
-import * as courseClient from "../client";
 
 const Details = ({ quizDetails }: { quizDetails: any }) => {
   const { cid } = useParams();
@@ -343,7 +342,7 @@ const Details = ({ quizDetails }: { quizDetails: any }) => {
         ...details,
         _id: new Date().getTime().toString(),
       };
-      courseClient.createQuizForCourse(cid, newQuiz); // Assuming createAssignment is a function for creating assignments
+      // courseClient.createQuizForCourse(cid, newQuiz); // Assuming createAssignment is a function for creating assignments
       // dispatch(addQuiz(newAssignment)); // Assuming addQuiz is the Redux action for adding a new quiz
       console.log("New quiz Created:", newQuiz);
       navigate(`/Kambaz/Courses/${cid}/Quizzes`);
