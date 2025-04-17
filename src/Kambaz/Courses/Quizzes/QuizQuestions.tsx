@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { MdArrowDropDown } from "react-icons/md";
 import { SlQuestion } from "react-icons/sl";
@@ -8,8 +9,7 @@ import { deleteQuestion } from "./QuestionEditor/reducerQuestion"; // Import the
 import * as quizClient from "./client";
 import { setQuestions } from "./QuestionEditor/reducerQuestion";
 import * as questionClient from "./QuestionEditor/client";
-import McqQuestion from "./QuestionEditor/McqQuestion";
-import FillInTheBlankEditor from "./QuestionEditor/FillInTheBlankEditor";
+
 
 const QuizQuestions = () => {
   const { cid, quizId } = useParams(); // Get course and quiz IDs from the route params

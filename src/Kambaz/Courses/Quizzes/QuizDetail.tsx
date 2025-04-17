@@ -238,10 +238,10 @@
 // export default Details;
 
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateQuiz } from "./reducerQuiz"; // Import the updateQuiz action
 import { CgShapeHalfCircle } from "react-icons/cg";
-import { findQuizzById, updateQuizz } from "./client"; // Client API
+import {updateQuizz } from "./client"; // Client API
 import { useNavigate, useParams } from "react-router";
 import * as courseClient from "../client";
 

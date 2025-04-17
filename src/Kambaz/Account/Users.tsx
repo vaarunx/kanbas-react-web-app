@@ -5,12 +5,13 @@ import { useParams } from "react-router";
 import PeopleTable from "../Courses/People/table";
 import * as client from "./client";
 import FormControl from "react-bootstrap/esm/FormControl";
+import { FaPlus } from "react-icons/fa6";
 export default function Users() {
   const [users, setUsers] = useState<any[]>([]);
   const { uid } = useParams();
 
   const [role, setRole] = useState("");
-  const [name, setName] = useState("");
+  const [, setName] = useState("");
   const filterUsersByName = async (name: string) => {
     setName(name);
     if (name) {
@@ -19,6 +20,19 @@ export default function Users() {
     } else {
       fetchUsers();
     }
+  };
+
+  const createUser = async () => {
+    const user = await client.createUser({
+      firstName: "New",
+      lastName: `User${users.length + 1}`,
+      username: `newuser${Date.now()}`,
+      password: "password123",
+      email: `email${users.length + 1}@neu.edu`,
+      section: "S101",
+      role: "STUDENT",
+    });
+    setUsers([...users, user]);
   };
 
   const filterUsersByRole = async (role: string) => {
@@ -40,7 +54,13 @@ export default function Users() {
   }, [uid]);
   return (
     <div>
-      <h3>Users</h3>
+      <button
+        onClick={createUser}
+        className="float-end btn btn-danger wd-add-people"
+      >
+        <FaPlus className="me-2" />
+        Users
+      </button>
       <FormControl
         onChange={(e) => filterUsersByName(e.target.value)}
         placeholder="Search people"

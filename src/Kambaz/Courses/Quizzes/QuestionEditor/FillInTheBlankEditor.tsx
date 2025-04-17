@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { updateQuestion, addQuestion } from "./reducerQuestion"; // Redux actions
@@ -19,7 +19,7 @@ export default function FillInTheBlankEditor() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [question, setQuestion] = useState<any>(null);
+  const [, setQuestion] = useState<any>(null);
   const [title, setTitle] = useState("");
   const [questionText, setQuestionText] = useState("");
   const [points, setPoints] = useState(4);
@@ -101,7 +101,7 @@ export default function FillInTheBlankEditor() {
       qtype: "fillIn",
       question: questionText,
       points,
-      answer: answers.map(({ id, text }) => ({ answer: text, isAnswer: true })), // Exclude internal IDs
+      answer: answers.map(({ text }) => ({ answer: text, isAnswer: true })), // Exclude internal IDs
     };
 
     try {

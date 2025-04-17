@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { LuBan } from "react-icons/lu";
@@ -6,13 +8,11 @@ import QuizQuestions from "./QuizQuestions";
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import * as quizClient from "./client"; // Import the server client
-import { setQuestions } from "./QuestionEditor/reducerQuestion";
-import { useDispatch } from "react-redux";
+
 
 export default function QuizEditor() {
   const { cid } = useParams();
   const { quizId } = useParams();
-  const dispatch = useDispatch();
 
   // const { assignments } = useSelector((state: any) => state.assignmentReducer);
 

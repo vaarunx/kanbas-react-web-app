@@ -1,19 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import McqQuestion from "./McqQuestion"; // Import the MCQEditor component
 import TrueFalseEditor from "./TrueFalseEditor";
 import FillInTheBlankEditor from "./FillInTheBlankEditor";
 import { useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  updateQuestion,
-  addQuestion,
-  setSelectedQuestion,
-} from "./reducerQuestion"; // Import Redux actions
+
 import * as questionClient from "./client";
 
 export default function QuestionEditor() {
-  const dispatch = useDispatch();
   const { quesId } = useParams();
   console.log(quesId);
   const [question, setQuestion] = useState<any>(null);

@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { TiPencil } from "react-icons/ti";
 import { useNavigate, useParams } from "react-router";
 // import { quizzes } from "../../Database";
 import { useDispatch, useSelector } from "react-redux";
 import * as quizClient from "./client"; // Import the server client
-import * as coursesClient from "../client";
-import { setQuizzes, setSelectedQuiz } from "./reducerQuiz";
+import {setSelectedQuiz } from "./reducerQuiz";
 
 interface Attempt {
   _id: string;

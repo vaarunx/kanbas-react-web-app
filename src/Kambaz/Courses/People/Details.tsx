@@ -54,7 +54,7 @@ export default function PeopleDetails() {
       <div className="text-danger fs-4 wd-name">
         {!editing && (
           <FaPencil
-            onClick={() => setEditing(true)}
+            onClick={() => setEditing(true)} 
             className="float-end fs-5 mt-2 wd-edit"
           />
         )}

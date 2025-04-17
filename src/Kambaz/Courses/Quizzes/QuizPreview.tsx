@@ -1,12 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 // import { questions } from "../../Database";
-import { useDispatch, useSelector } from "react-redux";
-import * as questionClient from "./QuestionEditor/client";
+import {useSelector } from "react-redux";
 import * as quizClient from "./client";
-import { setQuestions } from "./QuestionEditor/reducerQuestion";
 
 interface Answer {
   questionId: string;
@@ -38,7 +37,6 @@ export default function QuizPreview() {
 
   const { quizzes } = useSelector((state: any) => state.quizReducer);
   const quiz = quizzes.find((q: any) => q._id === quizId);
-  const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.accountReducer); // Get current user
   const { cid } = useParams();
 
