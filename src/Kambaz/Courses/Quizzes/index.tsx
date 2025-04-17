@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdArrowDropDown, MdOutlineRocketLaunch } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
 // import { quizzes } from "../../Database";
 import * as quizClient from "./client";
 // import * as coursesClient from "../client";
-import { setQuizzes, deleteQuiz, updateQuiz } from "./reducerQuiz";
+import { deleteQuiz, updateQuiz } from "./reducerQuiz";
 import { useDispatch, useSelector } from "react-redux";
 // import { ObjectId } from "mongodb";
 
@@ -23,14 +22,14 @@ export default function Quiz() {
   //   (quiz: any) => quiz.courseId === cid
   // );
 
-  const fetchQuiz = async () => {
-    // const quiz = await coursesClient.findQuizzesForCourse(cid as string);
-    console.log("Inside fetchQuiz");
-    dispatch(setQuizzes(quiz));
-  };
-  useEffect(() => {
-    fetchQuiz();
-  }, []);
+  // const fetchQuiz = async () => {
+  //   // const quiz = await coursesClient.findQuizzesForCourse(cid as string);
+  //   console.log("Inside fetchQuiz");
+  //   dispatch(setQuizzes(quiz));
+  // };
+  // useEffect(() => {
+  //   fetchQuiz();
+  // }, []);
 
   const { quizzes } = useSelector((state: any) => state.quizReducer);
 
